@@ -38,5 +38,12 @@
 
 - name: Start repmgrd
   become_user: postgres
-  shell: repmgrd
+  shell: /usr/bin/repmgrd
   ignore_errors: yes
+
+- name: Schedule repmgrd to start on reboot
+  become_user: postgres
+  cron:
+    name: "a job for reboot"
+    special_time: reboot
+    job: "/usr/bin/repmgrd"
